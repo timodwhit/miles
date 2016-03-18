@@ -39,7 +39,6 @@ projects[ctools][subdir] = "contrib"
 projects[date][version] = "2.9"
 projects[date][subdir] = "contrib"
 projects[date][patch][] = "patches/date-fix-for-all-day-checkbox-2191325-4.patch"
-projects[date][patch][] = "patches/date_migrate_generates-1888268-6.patch"
 
 projects[devel][version] = "1.5"
 projects[devel][subdir] = "contrib"
