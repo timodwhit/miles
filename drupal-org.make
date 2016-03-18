@@ -8,16 +8,16 @@ projects[admin_menu][subdir] = "contrib"
 projects[admin_views][version] = "1.5"
 projects[admin_views][subdir] = "contrib"
 
-projects[administerusersbyrole][version] = "2.0-beta1"
+projects[administerusersbyrole][version] = "2.0-rc1"
 projects[administerusersbyrole][subdir] = "contrib"
 
 projects[asset][version] = "1.0"
 projects[asset][subdir] = "contrib"
 
-projects[breakpoints][version] = "1.3"
+projects[breakpoints][version] = "1.4"
 projects[breakpoints][subdir] = "contrib"
 
-projects[cdn][version] = "2.6"
+projects[cdn][version] = "2.7"
 projects[cdn][subdir] = "contrib"
 projects[cdn][patch][] = "patches/cdn-font-icons-1514182-custom.patch"
 
@@ -27,16 +27,16 @@ projects[chain_menu_access][subdir] = "contrib"
 projects[chosen][version] = "2.0-beta4"
 projects[chosen][subdir] = "contrib"
 
-projects[ckeditor][version] = "1.16"
+projects[ckeditor][version] = "1.17"
 projects[ckeditor][subdir] = "contrib"
 
 projects[coder][version] = "2.5"
 projects[coder][subdir] = "contrib"
 
-projects[ctools][version] = "1.7"
+projects[ctools][version] = "1.9"
 projects[ctools][subdir] = "contrib"
 
-projects[date][version] = "2.8"
+projects[date][version] = "2.9"
 projects[date][subdir] = "contrib"
 projects[date][patch][] = "patches/date-fix-for-all-day-checkbox-2191325-4.patch"
 projects[date][patch][] = "patches/date_migrate_generates-1888268-6.patch"
@@ -47,7 +47,7 @@ projects[devel][subdir] = "contrib"
 projects[disqus][version] = "1.12"
 projects[disqus][subdir] = "contrib"
 
-projects[entity][version] = "1.6"
+projects[entity][version] = "1.7"
 projects[entity][subdir] = "contrib"
 
 projects[entityform][version] = "2.0-rc1"
@@ -65,13 +65,13 @@ projects[eva][subdir] = "contrib"
 projects[extlink][version] = "1.18"
 projects[extlink][subdir] = "contrib"
 
-projects[features][version] = "2.5"
+projects[features][version] = "2.7"
 projects[features][subdir] = "contrib"
 
-projects[field_collection][version] = "1.0-beta8"
+projects[field_collection][version] = "1.0-beta11"
 projects[field_collection][subdir] = "contrib"
 
-projects[field_group][version] = "1.4"
+projects[field_group][version] = "1.5"
 projects[field_group][subdir] = "contrib"
 
 projects[globalredirect][version] = "1.5"
@@ -86,19 +86,19 @@ projects[google_analytics][subdir] = "contrib"
 projects[imce][version] = "1.9"
 projects[imce][subdir] = "contrib"
 
-projects[jquery_update][version] = "2.6"
+projects[jquery_update][version] = "2.7"
 projects[jquery_update][subdir] = "contrib"
 
 projects[libraries][version] = "2.2"
 projects[libraries][subdir] = "contrib"
 
-projects[link][version] = "1.3"
+projects[link][version] = "1.4"
 projects[link][subdir] = "contrib"
 
-projects[linkit][version] = "3.3"
+projects[linkit][version] = "3.5"
 projects[linkit][subdir] = "contrib"
 
-projects[menu_block][version] = "2.5"
+projects[menu_block][version] = "2.7"
 projects[menu_block][subdir] = "contrib"
 
 projects[metatag][version] = "1.4"
@@ -107,13 +107,13 @@ projects[metatag][subdir] = "contrib"
 projects[module_filter][version] = "2.0"
 projects[module_filter][subdir] = "contrib"
 
-projects[pathauto][version] = "1.2"
+projects[pathauto][version] = "1.3"
 projects[pathauto][subdir] = "contrib"
 
-projects[redirect][version] = "1.0-rc1"
+projects[redirect][version] = "1.0-rc3"
 projects[redirect][subdir] = "contrib"
 
-projects[robotstxt][version] = "1.2"
+projects[robotstxt][version] = "1.4"
 projects[robotstxt][subdir] = "contrib"
 
 projects[role_delegation][version] = "1.1"
@@ -128,7 +128,7 @@ projects[scheduler][subdir] = "contrib"
 projects[schemaorg][version] = "1.0-rc1"
 projects[schemaorg][subdir] = "contrib"
 
-projects[site_map][version] = "1.2"
+projects[site_map][version] = "1.3"
 projects[site_map][subdir] = "contrib"
 
 projects[smart_trim][version] = "1.5"
@@ -156,7 +156,7 @@ projects[title][subdir] = "contrib"
 projects[token][version] = "1.6"
 projects[token][subdir] = "contrib"
 
-projects[views][version] = "3.11"
+projects[views][version] = "3.13"
 projects[views][subdir] = "contrib"
 
 projects[views_bulk_operations][version] = "3.3"
@@ -178,7 +178,7 @@ projects[wysiwyg][subdir] = "contrib"
 projects[xmlsitemap][version] = "2.2"
 projects[xmlsitemap][subdir] = "contrib"
 
-projects[youtube][version] = "1.5"
+projects[youtube][version] = "1.6"
 projects[youtube][subdir] = "contrib"
 projects[youtube][patch][] = "patches/allow-youtube-video-to-loop.patch"
 projects[youtube][patch][] = "patches/youtube-7x-undefined-entity-title-2441279-1.patch"
@@ -192,7 +192,7 @@ projects[slick_field_formatter][download][url] = "https://git.drupal.org/sandbox
 
 ; Themes
 projects[adminimal_theme][subdir] = "contrib"
-projects[adminimal_theme][version] = "1.21"
+projects[adminimal_theme][version] = "1.24"
 
 projects[bare][subdir] = "contrib"
 projects[bare][version] = "1.0-alpha1"
