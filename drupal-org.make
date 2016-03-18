@@ -180,7 +180,6 @@ projects[xmlsitemap][subdir] = "contrib"
 
 projects[youtube][version] = "1.6"
 projects[youtube][subdir] = "contrib"
-projects[youtube][patch][] = "patches/allow-youtube-video-to-loop.patch"
 projects[youtube][patch][] = "patches/youtube-7x-undefined-entity-title-2441279-1.patch"
 
 ; Sandboxes
