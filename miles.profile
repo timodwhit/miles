@@ -28,7 +28,6 @@ function miles_environment() {
 function miles_environment_switch($target_env, $current_env) {
   // Declare each optional development-related module
   $devel_modules = array(
-    'field_ui',
     'devel',
     'update',
     'views_ui',

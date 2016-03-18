@@ -7,7 +7,7 @@
 /**
  * Implements hook_install().
  */
-function miles_lite_install() {
+function miles_install() {
   // Enable some standard themes
   $themes = array('adminimal', 'bare');
   theme_enable($themes);
