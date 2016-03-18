@@ -19,7 +19,6 @@ projects[breakpoints][subdir] = "contrib"
 
 projects[cdn][version] = "2.7"
 projects[cdn][subdir] = "contrib"
-projects[cdn][patch][] = "patches/cdn-font-icons-1514182-custom.patch"
 
 projects[chain_menu_access][version] = "2.0"
 projects[chain_menu_access][subdir] = "contrib"
