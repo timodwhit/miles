@@ -11,7 +11,7 @@ function miles_install() {
   // Enable some standard themes
   $themes = array('adminimal', 'bare');
   theme_enable($themes);
-  $default_theme = variable_get('theme_default', 'bare');
+  $admin_theme = variable_set('admin_theme', 'adminimal');
 
   // Allow visitor account creation, but with administrative approval.
   variable_set('user_register', USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL);
