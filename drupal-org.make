@@ -183,6 +183,13 @@ projects[youtube][subdir] = "contrib"
 projects[youtube][patch][] = "patches/allow-youtube-video-to-loop.patch"
 projects[youtube][patch][] = "patches/youtube-7x-undefined-entity-title-2441279-1.patch"
 
+; Sandboxes
+projects[slick_field_formatter][type] = module
+projects[slick_field_formatter][subdir] = "contrib"
+projects[slick_field_formatter][download][type] = git
+projects[slick_field_formatter][download][branch] = "7.x-1.x"
+projects[slick_field_formatter][download][url] = "https://git.drupal.org/sandbox/bxtaylor/2320123.git"
+
 ; Themes
 projects[adminimal_theme][subdir] = "contrib"
 projects[adminimal_theme][version] = "1.21"
