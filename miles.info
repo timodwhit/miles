@@ -1,0 +1,72 @@
+name = MMG Custom Lite
+description = Install with MMG website functionality pre-configured. Optional features customizable after the installation process.
+core = 7.x
+
+; Core
+dependencies[] = block
+dependencies[] = contextual
+dependencies[] = dashboard
+dependencies[] = file
+dependencies[] = help
+dependencies[] = image
+dependencies[] = list
+dependencies[] = menu
+dependencies[] = number
+dependencies[] = options
+dependencies[] = path
+dependencies[] = rdf
+dependencies[] = shortcut
+dependencies[] = taxonomy
+
+; Contrib
+dependencies[] = admin_menu
+dependencies[] = admin_views
+dependencies[] = administerusersbyrole
+dependencies[] = asset
+dependencies[] = breakpoints
+dependencies[] = cdn
+dependencies[] = chosen
+dependencies[] = ckeditor
+dependencies[] = ctools
+dependencies[] = date
+dependencies[] = disqus
+dependencies[] = entity
+dependencies[] = entityreference
+dependencies[] = entityform
+dependencies[] = environment
+dependencies[] = environment_force
+dependencies[] = eva
+dependencies[] = extlink
+dependencies[] = features
+dependencies[] = field_collection
+dependencies[] = field_group
+dependencies[] = globalredirect
+dependencies[] = google_tag
+dependencies[] = googleanalytics
+dependencies[] = jquery_update
+dependencies[] = libraries
+dependencies[] = link
+dependencies[] = linkit
+dependencies[] = menu_block
+dependencies[] = pathauto
+dependencies[] = redirect
+dependencies[] = robotstxt
+dependencies[] = role_delegation
+dependencies[] = rules
+dependencies[] = scheduler
+dependencies[] = schemaorg
+dependencies[] = site_map
+dependencies[] = smart_trim
+dependencies[] = strongarm
+dependencies[] = taxonomy_display
+dependencies[] = title
+dependencies[] = token
+dependencies[] = views
+dependencies[] = views_bulk_operations
+dependencies[] = views_cache_bully
+dependencies[] = weight
+dependencies[] = xmlsitemap
+dependencies[] = youtube
+
+; Custom
+dependencies[] = slick_field_formatter

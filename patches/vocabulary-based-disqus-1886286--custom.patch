@@ -1,0 +1,175 @@
+diff --git a/disqus.admin.inc b/disqus.admin.inc
+index 94a2346..147c09b 100644
+--- a/disqus.admin.inc
++++ b/disqus.admin.inc
+@@ -38,6 +38,19 @@ function disqus_admin_settings() {
+     '#default_value' => variable_get('disqus_nodetypes', array()),
+     '#options' => $options,
+   );
++  $types = taxonomy_get_vocabularies();
++  $options = array();
++  foreach ($types as $type) {
++    $options[$type->vid] = $type->name;
++  }
++  $form['visibility']['disqus_vocabularies'] = array(
++    '#type' => 'checkboxes',
++    '#title' => t('Vocabularies'),
++    '#description' => t('Apply comments to only the following taxonomy terms.'),
++    '#default_value' => variable_get('disqus_vocabularies', array()),
++    '#options' => $options,
++  );
++
+   $form['visibility']['disqus_location'] = array(
+     '#type' => 'select',
+     '#title' => t('Location'),
+diff --git a/disqus.module b/disqus.module
+index 2efd1ac..3920e64 100644
+--- a/disqus.module
++++ b/disqus.module
+@@ -172,6 +172,46 @@ function disqus_element_post_render($children, &$element) {
+ }
+
+ /**
++ * Implements hook_field_extra_fields().
++ */
++function disqus_field_extra_fields() {
++  $extra = array();
++
++  $enabled_types = variable_get('disqus_nodetypes', array());
++  foreach (node_type_get_types() as $type) {
++    if (!empty($enabled_types[$type->type])) {
++      $extra['node'][$type->type] = array(
++        'display' => array(
++          'disqus' => array(
++            'label' => t('Disqus'),
++            'description' => t('Disqus comments'),
++            'weight' => 1002,
++          ),
++        ),
++      );
++    }
++  }
++
++  $vocabularies = variable_get('disqus_vocabularies', array());
++  foreach (taxonomy_get_vocabularies() as $vocabulary) {
++    if (!empty($vocabularies[$vocabulary->vid])) {
++      $extra['taxonomy_term'][$vocabulary->machine_name] = array(
++        'display' => array(
++          'disqus' => array(
++            'label' => t('Disqus'),
++            'description' => t('Disqus comments'),
++            'weight' => 1002,
++          ),
++        ),
++      );
++    }
++  }
++
++  return $extra;
++}
++
++
++/**
+  * Implements hook_node_load().
+  */
+ function disqus_node_load($nodes, $types) {
+@@ -364,6 +404,99 @@ function disqus_node_update($node) {
+ }
+
+ /**
++ * Implements hook_taxonomy_term_load().
++ */
++function disqus_taxonomy_term_load($terms) {
++  // Make sure we only load Disqus on nodes of the desired types.
++  $disqustypes = variable_get('disqus_vocabularies', array());
++
++  // Check which Disqus domain to use.
++  $domain = variable_get('disqus_domain', '');
++  if (!empty($domain)) {
++    // Load Disqus into the nodes.
++    foreach ($terms as &$term) {
++      if (!empty($disqustypes[$term->vid])) {
++        // Save the data to the term object.
++        $term->disqus = array('domain' => $domain);
++
++        // Apply the Disqus status to the term.
++        $status = new stdClass();
++        $term->disqus['status'] = isset($status->status) ? (bool)$status->status : TRUE;
++
++        // Build the absolute URL without the alias for the disqus_url flag.
++        $term->disqus['url'] = url("taxonomy/term/$term->tid", array(
++          'absolute' => TRUE,
++        ));
++
++        // Build the title.
++        $term->disqus['title'] = check_plain(strip_tags($term->name));
++
++        // Provide the identifier.
++        $term->disqus['identifier'] = 'taxonomy/term/' . $term->tid;
++
++        if ($developer = variable_get('disqus_developer', FALSE)) {
++          $term->disqus['developer'] = (int) $developer;
++        }
++      }
++    }
++  }
++}
++
++/**
++ * Implements hook_taxonomy_term_load().
++ */
++function disqus_taxonomy_term_view($term, $view_mode, $langcode) {
++  if (isset($term->disqus) && user_access('view disqus comments') && $term->disqus['status'] == 1) {
++    switch ($view_mode) {
++      case 'full':
++        // Inject Disqus into the node object.
++        switch (variable_get('disqus_location', 'content_area')) {
++          case 'content_area':
++            // Inject into the node content.
++            $term->content['disqus'] = array(
++              '#type' => 'disqus',
++              '#disqus' => $term->disqus,
++              '#weight' => variable_get('disqus_weight', 50),
++            );
++            break;
++        }
++        break;
++      case 'teaser':
++        // Display the Disqus link.
++        $links['disqus_comments_num'] = array(
++          'title' => t('Comments'),
++          'href' => 'taxonomy/term/' . $term->tid,
++          'fragment' => 'disqus_thread',
++          'attributes' => array(
++            // Identify the node for Disqus with the unique identifier:
++            // http://docs.disqus.com/developers/universal/#comment-count
++            'data-disqus-identifier' => 'taxonomy/term/' . $term->tid,
++          ),
++        );
++        $term->content['links']['disqus'] = array(
++          '#theme' => 'links',
++          '#links' => $links,
++          '#attributes' => array(
++            'class' => array('links', 'inline'),
++          ),
++        );
++
++        // Attach disqus.js to load the Disqus comment count JavaScript.
++        $term->content['links']['#attached']['js'][] = drupal_get_path('module', 'disqus') . '/disqus.js';
++        $term->content['links']['#attached']['js'][] = array(
++          'data' => array('disqusComments' => $term->disqus['domain']),
++          'type' => 'setting',
++        );
++        break;
++    }
++  }
++  else {
++    return array();
++  }
++
++}
++
++/**
+  * Implements hook_user_load().
+  */
+ function disqus_user_load($users) {

@@ -1,0 +1,26 @@
+<?php
+/**
+ * @file
+ * Install, update and uninstall functions for the mmg microsite installation profile.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function miles_lite_install() {
+  // Enable some standard themes
+  $themes = array('adminimal', 'bare');
+  theme_enable($themes);
+  $default_theme = variable_get('theme_default', 'bare');
+
+  // Allow visitor account creation, but with administrative approval.
+  variable_set('user_register', USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL);
+
+  // Enable default permissions for system roles.
+  user_role_grant_permissions(DRUPAL_ANONYMOUS_RID, array('access content'));
+  user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, array('access content'));
+
+  // Enable environment force and invoke it.
+  module_enable(array('environment_force'));
+  module_invoke('environment_force', 'init');
+}

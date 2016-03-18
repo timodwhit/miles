@@ -1,0 +1,27 @@
+diff --git a/includes/service.inc b/includes/service.inc
+index be973fd..a7a31c4 100644
+--- a/includes/service.inc
++++ b/includes/service.inc
+@@ -1522,13 +1522,20 @@ class SearchApiSolrService extends SearchApiAbstractService {
+       foreach ($filter->getTags() as $tag) {
+         $tag = "{!tag=$tag}";
+         foreach ($fq as $i => $filter) {
+-          $fq[$i] = $tag . $filter;
++          // Only apply the tag to the first one.
++          if ($i == 0) {
++            $fq[$i] = $tag . $filter;
++          }
++          else {
++            $fq[$i] = $filter;
++          }
+         }
+         // We can only apply one tag per filter.
+         break;
+       }
+     }
+-    return ($or && count($fq) > 1) ? array('((' . implode(') OR (', $fq) . '))') : $fq;
++
++    return ($or && count($fq) > 1) ? array(implode(' OR ', $fq)) : $fq;
+   }
+
+   /**

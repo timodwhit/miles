@@ -1,0 +1,142 @@
+From 9d855ee2daf6eae44a3aec3f3219e17e306e48cb Mon Sep 17 00:00:00 2001
+From: mpv <ariel@gcoop.coop>
+Date: Fri, 6 Sep 2013 16:51:12 -0300
+Subject: [PATCH] Issue #2083695 by mpv: add migrate support
+
+---
+ double_field.info                |    7 ++-
+ double_field.migrate.inc         |   87 ++++++++++++++++++++++++++++++++++++++
+ tests/double_field_test_case.inc |    4 ++
+ 3 files changed, 94 insertions(+), 4 deletions(-)
+ create mode 100644 double_field.migrate.inc
+
+diff --git a/double_field.info b/double_field.info
+index b7a66fb..1df03de 100644
+--- a/double_field.info
++++ b/double_field.info
+@@ -3,11 +3,10 @@ description = Provides a field type with two separate subfields
+ package = Fields
+ core = 7.x
+ 
++; Migrate handler.
++files[] = double_field.migrate.inc
++
+ files[] = tests/double_field_field.test
+ files[] = tests/double_field_widgets.test
+ files[] = tests/double_field_formatters.test
+ files[] = tests/double_field_contrib.test
+-files[] = tests/double_field_test_case.inc
+-files[] = tests/double_field_field.inc
+-files[] = tests/double_field_widget.inc
+-files[] = tests/double_field_formatter.inc
+diff --git a/double_field.migrate.inc b/double_field.migrate.inc
+new file mode 100644
+index 0000000..8f6aa77
+--- /dev/null
++++ b/double_field.migrate.inc
+@@ -0,0 +1,87 @@
++<?php
++
++/**
++ * @file
++ * Migrate integration.
++ *
++ * Subfields are used to specify the first and second values.
++ *
++ * @code
++ *   $this->addFieldMapping('field_double')->defaultValue('TRUE');
++ *   $this->addFieldMapping('field_double:first', 'source_value_1');
++ *   $this->addFieldMapping('field_double:second', 'source_value_2');
++ * @endcode
++ */
++
++/**
++ * Implements hook_migrate_api().
++ */
++function double_field_migrate_api() {
++  $api = array(
++    'api' => 2,
++    'field handlers' => array(
++      'MigrateDoubleFieldHandler',
++    ),
++  );
++
++  return $api;
++}
++
++/**
++ * Migrate field handler for double fields.
++ */
++class MigrateDoubleFieldHandler extends MigrateFieldHandler {
++
++  public function __construct() {
++    $this->registerTypes(array('double_field'));
++  }
++
++  /**
++   * Implements MigrateFieldHandler::fields().
++   *
++   * @param $type
++   *  field type.
++   * @param $parent_field
++   *  name of the parent field.
++   * @param Migration $migration
++   *  The migration context for the parent field. We can look at the mappings
++   *  and determine which subfields are relevant.
++   *
++   * @return array
++   */
++  public function fields($type, $parent_field, $migration = NULL) {
++    $fields['first'] = t('Subfield: Value of the first part of the Double Field.');
++    $fields['second'] = t('Subfield: Value of the second part of the Double Field.');
++
++    return $fields;
++  }
++
++  public function prepare($entity, array $field_info, array $instance, array $values) {
++    $arguments = array();
++    if (isset($values['arguments'])) {
++      $arguments = array_filter($values['arguments']);
++      unset($values['arguments']);
++    }
++    $language = $this->getFieldLanguage($entity, $field_info, $arguments);
++
++    // Setup the standard Field API array for saving.
++    $return = array($language => array());
++    $delta = 0;
++    foreach ($values as $value) {
++      foreach (array('first', 'second') as $field) {
++        if (isset($arguments[$field])) {
++          if (is_array($arguments[$field])) {
++            $return[$language][$delta][$field] = $arguments[$field][$delta];
++          }
++          else {
++            $return[$language][$delta][$field] = $arguments[$field] ;
++          }
++        }
++      }
++
++      $delta++;
++    }
++
++    return isset($return) ? $return : NULL;
++  }
++}
+diff --git a/tests/double_field_test_case.inc b/tests/double_field_test_case.inc
+index a0e32ff..a6f145b 100644
+--- a/tests/double_field_test_case.inc
++++ b/tests/double_field_test_case.inc
+@@ -15,6 +15,10 @@
+  * @endcode
+  */
+ 
++require_once 'double_field_widget.inc';
++require_once 'double_field_formatter.inc';
++require_once 'double_field_field.inc';
++
+ /**
+  * Tests for double field types.
+  */
+-- 
+1.7.10.4
+

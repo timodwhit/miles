@@ -1,0 +1,40 @@
+diff --git a/views_random_seed_handler_sort_random.inc b/views_random_seed_handler_sort_random.inc
+index e047a29..91daa91 100644
+--- a/views_random_seed_handler_sort_random.inc
++++ b/views_random_seed_handler_sort_random.inc
+@@ -80,18 +80,23 @@ class views_random_seed_handler_sort_random extends views_handler_sort {
+   function query() {
+     $db_type = db_driver();
+     $seed = views_random_seed_calculate_seed($this->options, $this->view->name, $this->view->current_display, $db_type);
+-    switch ($db_type) {
+-      case 'mysql':
+-      case 'mysqli':
+-        $formula = 'RAND(' . $seed . ')';
+-        break;
+-      case 'pgsql':
+-        // For PgSQL we'll run an extra query with a integer between
+-        // 0 and 1 which will be used by the RANDOM() function.
+-        db_query('select setseed(' . $seed . ')');
+-        db_query("select random()");
+-        $formula = 'RANDOM()';
+-        break;
++    if ($this->view->query->plugin_name == 'search_api_views_query') {
++      $order = 'random_' . $seed . ' asc';
++      $this->query->add_orderby('rand', NULL, $order);
++    }
++    else {
++      switch ($db_type) {
++        case 'mysql':
++        case 'mysqli':
++          $formula = 'RAND(' . $seed . ')';
++          break;
++        case 'pgsql':
++           // For PgSQL we'll run an extra query with a integer between
++           // 0 and 1 which will be used by the RANDOM() function.
++           db_query('select setseed(' . $seed . ')');
++           db_query("select random()");
++           $formula = 'RANDOM()';
++           break;
+     }
+     if (!empty($formula)) {
+       $this->query->add_orderby(NULL, $formula, $this->options['order'], '_' . $this->field);

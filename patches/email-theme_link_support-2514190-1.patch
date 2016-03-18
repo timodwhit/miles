@@ -1,0 +1,56 @@
+diff --git a/email.module b/email.module
+index a33d85c..358bcd4 100644
+--- a/email.module
++++ b/email.module
+@@ -106,15 +106,30 @@ function email_field_formatter_view($object_type, $object, $field, $instance, $l
+   switch ($display['type']) {
+     case 'email_default':
+       foreach ($items as $delta => $item) {
+-        $output = l($item['email'], 'mailto:' . $item['email']);
+-        $element[$delta] = array('#markup' => $output);
++        $element[$delta] = array(
++          '#theme' => 'link',
++          '#text' => $item['email'],
++          '#path' => 'mailto:' . $item['email'],
++          '#options' => array(
++            'attributes' => array(),
++            'html' => TRUE,
++          ),
++        );
+       }
+       break;
+ 
+     case 'email_contact':
+       $ids = entity_extract_ids($object_type, $object);
+       foreach ($items as $delta => $item) {
+-        $element[$delta] = array('#markup' => l(t('Contact person by email'), 'email/' . $object_type . '/' . $ids[0] . '/' . $instance['field_name']));
++        $element[$delta] = array(
++          '#theme' => 'link',
++          '#text' => t('Contact person by email'),
++          '#path' => 'email/' . $object_type . '/' . $ids[0] . '/' . $instance['field_name'],
++          '#options' => array(
++            'attributes' => array(),
++            'html' => FALSE,
++          )
++        );
+         // Since email is always sent to first item's email, break after any email address found.
+         break;
+       }
+@@ -132,8 +147,15 @@ function email_field_formatter_view($object_type, $object, $field, $instance, $l
+           $element[$delta] = array('#markup' => spamspan($item['email']));
+         }
+         else {
+-          $output = l($item['email'], 'mailto:' . $item['email']);
+-          $element[$delta] = array('#markup' => $output);
++          $element[$delta] = array(
++            '#theme' => 'link',
++            '#text' => $item['email'],
++            '#path' => 'mailto:' . $item['email'],
++            '#options' => array(
++              'attributes' => array(),
++              'html' => FALSE,
++            )
++          );
+         }
+       }
+       break;

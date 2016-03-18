@@ -1,0 +1,49 @@
+diff --git a/includes/service.inc b/includes/service.inc
+index 76225fa..7da6558 100644
+--- a/includes/service.inc
++++ b/includes/service.inc
+@@ -646,6 +646,7 @@ class SearchApiSolrService extends SearchApiAbstractService {
+       $ret = array(
+         'search_api_id' => 'item_id',
+         'search_api_relevance' => 'score',
++        'search_api_random' => 'random',
+       );
+ 
+       // Add the names of any fields configured on the index.
+@@ -854,6 +855,10 @@ class SearchApiSolrService extends SearchApiAbstractService {
+       if (substr($f, 0, 3) == 'ss_') {
+         $f = 'sort_' . substr($f, 3);
+       }
++      // Random is strictly processed with a order. See SearchApiQueryInterface::sort().
++      if ($field == 'search_api_random') {
++        $f = '';
++      }
+       $order = strtolower($order);
+       $sort[$field] = "$f $order";
+     }
+diff --git a/solr-conf/3.x/schema.xml b/solr-conf/3.x/schema.xml
+index acc5e4b..e80d7cb 100644
+--- a/solr-conf/3.x/schema.xml
++++ b/solr-conf/3.x/schema.xml
+@@ -515,7 +515,7 @@
+     <dynamicField name="sort_*" type="sortString" indexed="true" stored="false"/>
+     <copyField source="ss_*" dest="sort_*"/>
+     <!-- A random sort field -->
+-    <dynamicField name="random_*" type="rand" indexed="true" stored="true"/>
++    <dynamicField name="random_*" type="rand" indexed="true" stored="false"/>
+     <!-- This field is used to store access information (e.g. node access grants), as opposed to field data -->
+     <dynamicField name="access_*" type="integer" indexed="true" stored="false" multiValued="true"/>
+ 
+diff --git a/solr-conf/4.x/schema.xml b/solr-conf/4.x/schema.xml
+index 6e2b615..f5442c7 100644
+--- a/solr-conf/4.x/schema.xml
++++ b/solr-conf/4.x/schema.xml
+@@ -521,7 +521,7 @@
+     <dynamicField name="sort_*" type="sortString" indexed="true" stored="false"/>
+     <copyField source="ss_*" dest="sort_*"/>
+     <!-- A random sort field -->
+-    <dynamicField name="random_*" type="rand" indexed="true" stored="true"/>
++    <dynamicField name="random_*" type="rand" indexed="true" stored="false"/>
+     <!-- This field is used to store access information (e.g. node access grants), as opposed to field data -->
+     <dynamicField name="access_*" type="integer" indexed="true" stored="false" multiValued="true"/>
+ 

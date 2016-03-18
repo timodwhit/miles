@@ -1,0 +1,33 @@
+From 988ec8663e06418d2ca5611030e944634b4a0645 Mon Sep 17 00:00:00 2001
+From: Alexandru Croitor <alexandru.croitor@wearepropeople.com>
+Date: Mon, 29 Dec 2014 16:02:57 +0200
+Subject: [PATCH] Issue #1888268 by mikran, kplanz: Date migrate generates
+ undefined index 'timezone' notices.
+
+---
+ date.migrate.inc | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/date.migrate.inc b/date.migrate.inc
+index a1b92d5..ad2a568 100644
+--- a/date.migrate.inc
++++ b/date.migrate.inc
+@@ -129,6 +129,7 @@ class DateMigrateFieldHandler extends MigrateFieldHandler {
+       // timestamp for 'now'.
+       if (empty($from)) {
+         $return[$language][$delta]['value'] = NULL;
++        $return[$language][$delta]['timezone'] = NULL;
+         if (!empty($field_info['settings']['todate'])) {
+           $return[$language][$delta]['value2'] = NULL;
+         }
+@@ -186,6 +187,7 @@ class DateMigrateFieldHandler extends MigrateFieldHandler {
+       }
+       else {
+         $return[$language][$delta]['value'] = $from;
++        $return[$language][$delta]['timezone'] = $timezone;
+         if (!empty($to)) {
+           $return[$language][$delta]['value2'] = $to;
+         }
+-- 
+2.2.1
+

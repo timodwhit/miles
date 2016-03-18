@@ -1,0 +1,49 @@
+diff --git a/contrib/search_api_views/includes/query.inc b/contrib/search_api_views/includes/query.inc
+index 1af1f08..60d7168 100644
+--- a/contrib/search_api_views/includes/query.inc
++++ b/contrib/search_api_views/includes/query.inc
+@@ -134,7 +134,16 @@ class SearchApiViewsQuery extends views_plugin_query {
+   public function add_selector_orderby($selector, $order = 'ASC') {
+     $this->query->sort($selector, $order);
+   }
+-
++  /**
++   * Implement the same add_orderby() method as views_plugin_query_default so
++   * that Views' "Global: Random" sort can be used.
++   */
++  function add_orderby($table, $field = NULL, $order = 'ASC', $alias = '', $params = array()) {
++    if ($table == 'rand') {
++      $this->add_selector_orderby('search_api_random', $order);
++    }
++  }
++
+   /**
+    * Defines the options used by this query plugin.
+    *
+diff --git a/includes/query.inc b/includes/query.inc
+index b005cf7..f580d8d 100644
+--- a/includes/query.inc
++++ b/includes/query.inc
+@@ -585,6 +585,7 @@ class SearchApiQuery implements SearchApiQueryInterface {
+     $fields += array(
+       'search_api_relevance' => array('type' => 'decimal'),
+       'search_api_id' => array('type' => 'integer'),
++      'search_api_random' => array('type' => 'integer'),
+     );
+     if (empty($fields[$field])) {
+       throw new SearchApiException(t('Trying to sort on unknown field @field.', array('@field' => $field)));
+@@ -594,6 +595,14 @@ class SearchApiQuery implements SearchApiQueryInterface {
+       throw new SearchApiException(t('Trying to sort on field @field of illegal type @type.', array('@field' => $field, '@type' => $type)));
+     }
+     $order = strtoupper(trim($order)) == 'DESC' ? 'DESC' : 'ASC';
++    if ($field != 'search_api_random') {
++      $order = strtoupper(trim($order)) == 'DESC' ? 'DESC' : 'ASC';
++    }
++    else {
++      if ($order == 'ASC' || $order == "DESC") {
++        $order = 'random_' . rand(1,200) . ' asc';
++      }
++    }
+     $this->sort[$field] = $order;
+     return $this;
+   }

@@ -1,0 +1,13 @@
+diff --git a/smart_trim.module b/smart_trim.module
+index 1b2f6d5..e2cf758 100644
+--- a/smart_trim.module
++++ b/smart_trim.module
+@@ -138,7 +138,7 @@ function smart_trim_field_formatter_view($entity_type, $entity, $field, $instanc
+         // doing this without conflicting the other settings.
+         if (!empty($settings['trim_link']) && !empty($uri['path'])) {
+           $output_appended = strip_tags($output_appended);
+-          $output = l($output_appended, $uri['path']);
++          $output = l($output_appended, $uri['path'], array('html' => TRUE));
+           $element[$delta] = array(
+             '#markup' => $output,
+           );
