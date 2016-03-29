@@ -84,6 +84,12 @@ projects[google_analytics][subdir] = "contrib"
 projects[imce][version] = "1.9"
 projects[imce][subdir] = "contrib"
 
+projects[inline_entity_form][version] = "1.6"
+projects[inline_entity_form][subdir] = "contrib"
+
+projects[install_connector][version] = "1.x-dev"
+projects[install_connector][subdir] = "contrib"
+
 projects[jquery_update][version] = "2.7"
 projects[jquery_update][subdir] = "contrib"
 
@@ -107,6 +113,9 @@ projects[module_filter][subdir] = "contrib"
 
 projects[pathauto][version] = "1.3"
 projects[pathauto][subdir] = "contrib"
+
+projects[picture][version] = "2.13"
+projects[picture][subdir] = "contrib"
 
 projects[redirect][version] = "1.0-rc3"
 projects[redirect][subdir] = "contrib"
