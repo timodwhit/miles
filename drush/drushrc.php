@@ -103,9 +103,7 @@
  * keep using them, uncomment the following lines or copy them to your drushrc
  * file.
  */
-$options['shell-aliases']['sql-drop'] = 'help';
-$options['shell-aliases']['site-install'] = 'help';
-$options['shell-aliases']['si'] = 'help';
+
 $options['shell-aliases']['vdb'] = 'sql-dump --gzip --result-file --skip-tables-key=common';
 $options['shell-aliases']['env-revert'] = '!drush env-switch production --force && drush cc all';
 $options['shell-aliases']['sapi-r'] = '!drush sapi-c && drush sapi-i';

@@ -170,9 +170,6 @@ projects[views_random_seed][patch][] = "patches/views_random_seed-2461099-2.patc
 projects[weight][version] = "2.4"
 projects[weight][subdir] = "contrib"
 
-projects[wysiwyg][version] = "2.2"
-projects[wysiwyg][subdir] = "contrib"
-
 projects[xmlsitemap][version] = "2.2"
 projects[xmlsitemap][subdir] = "contrib"
 
@@ -191,4 +188,4 @@ projects[adminimal_theme][subdir] = "contrib"
 projects[adminimal_theme][version] = "1.24"
 
 projects[bare][subdir] = "contrib"
-projects[bare][version] = "1.0-alpha1"
+projects[bare][version] = "7.x-1.x-dev"

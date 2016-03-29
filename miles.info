@@ -1,5 +1,5 @@
-name = MMG Custom Lite
-description = Install with MMG website functionality pre-configured. Optional features customizable after the installation process.
+name = Miles
+description = Install a lightweight install profile with some commonly used modules.
 core = 7.x
 
 ; Core
