@@ -188,4 +188,4 @@ projects[adminimal_theme][subdir] = "contrib"
 projects[adminimal_theme][version] = "1.24"
 
 projects[bare][subdir] = "contrib"
-projects[bare][version] = "7.x-1.x-dev"
+projects[bare][version] = "1.x-dev"
